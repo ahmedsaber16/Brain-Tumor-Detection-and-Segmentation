@@ -3,4 +3,4 @@ keras~=3.3.3
 gunicorn~=21.2.0
 Bootstrap-Flask~=2.3.3
 TensorFlow~=2.16.1
-OpenCV~=4.7.0
+OpenCV~=4.7.0.72
