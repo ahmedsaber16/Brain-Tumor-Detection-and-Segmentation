@@ -136,7 +136,7 @@
             <input type="file" id="file-input" name="file" accept="image/*">
             <div class="button-container">
                 <button type="button" class="button" onclick="predict()">Predict</button>
-                <button type="button" class="button" onclick="segment()">Segment</button>
+                <button type="button" class="button" id="segment-button" style="display: none;" onclick="segment()">Segment</button>
             </div>
         </form>
 
@@ -162,6 +162,11 @@
                 if (xhr.status == 200) {
                     var response = JSON.parse(xhr.responseText);
                     document.getElementById("result").innerHTML = "Predicted tumor type: " + response.result;
+                    if (response.result !== "no_tumor") {
+                        document.getElementById("segment-button").style.display = "inline-block";
+                    } else {
+                        document.getElementById("segment-button").style.display = "none";
+                    }
                 } else {
                     alert("Error: " + xhr.statusText);
                 }
@@ -200,6 +205,12 @@
                 reader.onload = function(e) {
                     document.getElementById("selected-image").src = e.target.result;
                     document.getElementById("selected-image-container").classList.add("show");
+                    // Clear the result and MRI with mask
+                    document.getElementById("result").innerHTML = "";
+                    document.getElementById("mri-with-mask").src = "";
+                    document.getElementById("mri-with-mask-container").classList.remove("show");
+                    // Hide the segment button
+                    document.getElementById("segment-button").style.display = "none";
                 };
                 reader.readAsDataURL(file);
             }
