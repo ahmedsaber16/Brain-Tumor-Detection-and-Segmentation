@@ -101,6 +101,16 @@ import os
 from tensorflow.keras.applications.vgg16 import preprocess_input
 
 app = Flask(__name__)
+model_cls = load_model('modelFineT.h5')
+labels = ['glioma_tumor', 'no_tumor', 'meningioma_tumor', 'pituitary_tumor']
+
+# Function to predict tumor type
+def predict_tumor_type(image_path):
+    img = cv2.imread(image_path)
+    img = cv2.resize(img, (150, 150))
+    img = np.expand_dims(img, axis=0)
+    preds = model_cls.predict(img)
+    return labels[np.argmax(preds)]
 '''
 # Load segmentation model
 model_seg = load_model("seg_model.h5", custom_objects={"focal_tversky": focal_tversky, "tversky": tversky, "tversky_loss": tversky_loss})
@@ -139,7 +149,7 @@ def segmentation(image_path):
 @app.route('/')
 def index():
     return render_template("index.html")
-'''
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'file' not in request.files:
@@ -155,7 +165,7 @@ def predict():
         file.save(filepath)
         tumor_type = predict_tumor_type(filepath)
         return jsonify({'result': tumor_type})
-
+'''
 @app.route('/segment', methods=['POST'])
 def segment():
     if 'file' not in request.files:
