@@ -1,18 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
 # In[1]:
 import h5py
 
@@ -111,7 +99,7 @@ def predict_tumor_type(image_path):
     img = np.expand_dims(img, axis=0)
     preds = model_cls.predict(img)
     return labels[np.argmax(preds)]
-'''
+
 # Load segmentation model
 model_seg = load_model("seg_model.h5", custom_objects={"focal_tversky": focal_tversky, "tversky": tversky, "tversky_loss": tversky_loss})
 model_cls = load_model('modelFineT.h5')
@@ -145,7 +133,7 @@ def segmentation(image_path):
         mri_with_mask = base64.b64encode(img_encoded).decode()
 
     return has_mask, mri_with_mask
-'''
+
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -165,7 +153,7 @@ def predict():
         file.save(filepath)
         tumor_type = predict_tumor_type(filepath)
         return jsonify({'result': tumor_type})
-'''
+
 @app.route('/segment', methods=['POST'])
 def segment():
     if 'file' not in request.files:
@@ -189,7 +177,7 @@ def segment():
         has_mask, mri_with_mask = segmentation(filepath)
         
         return jsonify({'has_mask': has_mask, 'mri_with_mask': mri_with_mask})
-'''
+
 if __name__ == '__main__':
     app.run()
 
