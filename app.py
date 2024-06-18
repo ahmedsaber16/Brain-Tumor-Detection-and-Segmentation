@@ -99,7 +99,7 @@ def predict_tumor_type(image_path):
     return labels[np.argmax(preds)]
 
 # Load segmentation model
-model_seg = load_model("main/seg_model.h5", custom_objects={"focal_tversky": focal_tversky, "tversky": tversky, "tversky_loss": tversky_loss})
+#model_seg = load_model("main/seg_model.h5", custom_objects={"focal_tversky": focal_tversky, "tversky": tversky, "tversky_loss": tversky_loss})
 model_cls = load_model('main/modelFineT.h5')
 labels = ['glioma_tumor', 'no_tumor', 'meningioma_tumor', 'pituitary_tumor']
 
@@ -150,7 +150,7 @@ def predict():
         file.save(filepath)
         tumor_type = predict_tumor_type(filepath)
         return jsonify({'result': tumor_type})
-
+'''
 @app.route('/segment', methods=['POST'])
 def segment():
     if 'file' not in request.files:
@@ -174,7 +174,7 @@ def segment():
         has_mask, mri_with_mask = segmentation(filepath)
         
         return jsonify({'has_mask': has_mask, 'mri_with_mask': mri_with_mask})
-
+'''
 if __name__ == '__main__':
     app.run()
 
