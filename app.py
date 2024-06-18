@@ -176,7 +176,7 @@ def segment():
         return jsonify({'has_mask': has_mask, 'mri_with_mask': mri_with_mask})
 '''
 if __name__ == '__main__':
-    app.run()
+    app.run(port=5001)
 
 
 # In[ ]:
