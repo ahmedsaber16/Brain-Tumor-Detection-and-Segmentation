@@ -133,16 +133,9 @@ def segmentation(image_path):
         mri_with_mask = base64.b64encode(img_encoded).decode()
 
     return has_mask, mri_with_mask
-'''
 @app.route('/')
 def index():
     return render_template("index.html")
-'''
-@app.route('/')
-def index():
-    # Get the current working directory
-    current_directory = os.getcwd()
-    return send_from_directory(current_directory, 'index.html')
     
 @app.route('/predict', methods=['POST'])
 def predict():
