@@ -89,8 +89,6 @@ import os
 from tensorflow.keras.applications.vgg16 import preprocess_input
 
 app = Flask(__name__)
-model_cls = load_model('modelFineT.h5')
-labels = ['glioma_tumor', 'no_tumor', 'meningioma_tumor', 'pituitary_tumor']
 
 # Function to predict tumor type
 def predict_tumor_type(image_path):
@@ -101,8 +99,8 @@ def predict_tumor_type(image_path):
     return labels[np.argmax(preds)]
 
 # Load segmentation model
-model_seg = load_model("seg_model.h5", custom_objects={"focal_tversky": focal_tversky, "tversky": tversky, "tversky_loss": tversky_loss})
-model_cls = load_model('modelFineT.h5')
+model_seg = load_model("main/seg_model.h5", custom_objects={"focal_tversky": focal_tversky, "tversky": tversky, "tversky_loss": tversky_loss})
+model_cls = load_model('main/modelFineT.h5')
 labels = ['glioma_tumor', 'no_tumor', 'meningioma_tumor', 'pituitary_tumor']
 
 # Function to predict tumor type
